@@ -3,6 +3,14 @@ import { Node } from "./node.js";
 class Tree{
     #root;
 
+    constructor(array){
+        array.sort((a, b) => a - b);
+
+        array = this.#removeDuplicates(array);
+
+        this.#root = this.#buildTreeRec(array, 0, array.length - 1);
+    }
+
     #removeDuplicates(array){
         const newArr = [];
         let prev = null;
@@ -29,17 +37,6 @@ class Tree{
         root.rightNode = this.#buildTreeRec(array, mid + 1, end);
 
         return root;
-    }
-
-
-    buildTree(array){
-        array.sort((a, b) => a - b);
-
-        array = this.#removeDuplicates(array);
-
-        this.#root =  this.#buildTreeRec(array, 0, array.length - 1);
-
-        return this.#root;
     }
 
     #getNode(node, value){
@@ -223,6 +220,15 @@ class Tree{
 
     isBalanced(){
         return this.#isBalancedRec(this.#root);
+    }
+
+
+    rebalance(){
+        const arr = [];
+        this.inOrderForEach(data => arr.push(data));
+        arr.sort((a,b) => a - b);
+
+        this.#root = this.#buildTreeRec(arr, 0, arr.length - 1);
     }
 }
 

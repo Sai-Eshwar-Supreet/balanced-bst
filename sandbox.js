@@ -1,22 +1,8 @@
 import { Tree } from './tree.js'
 
-const tree = new Tree();
-
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-
-const root = tree.buildTree(arr);
-
+const tree = new Tree(arr);
 console.log("Is Balance: ", tree.isBalanced());
-
-const prettyPrint = (node, prefix = '', isLeft = true) => {
-    if (node === null || node === undefined) {
-        return;
-    }
-    
-    prettyPrint(node.rightNode, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-    prettyPrint(node.leftNode, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-}
 
 console.log(tree.includes(6345));
 console.log(tree.includes(-2));
@@ -26,13 +12,18 @@ tree.insert(1);
 tree.insert(1000000);
 tree.insert(8000);
 tree.insert(0);
+tree.insert(2);
+tree.insert(2);
+tree.insert(-1);
 
-prettyPrint(root);
+tree.prettyPrint();
 tree.deleteItem(8);
 
 console.log("Is Balance: ", tree.isBalanced());
+
+tree.rebalance();
 console.log("====================================")
-prettyPrint(root);
+tree.prettyPrint();
 
 // console.log("==================================== Level order traversal")
 // tree.levelOrderForEach(data => console.log(data));
