@@ -53,6 +53,24 @@ class Tree{
     includes(value){
         return this.#includesRec(this.#root, value);
     }
+
+    #insertRec(node, value){
+        if(node === null){
+            node = new Node(value);
+        }
+        else if(value < node.data){
+            node.leftNode = this.#insertRec(node.leftNode, value);
+        }
+        else if(value > node.data){
+            node.rightNode = this.#insertRec(node.rightNode, value);
+        }
+
+        return node;
+    }
+
+    insert(value){
+        this.#root = this.#insertRec(this.#root, value);
+    }
 }
 
 export { Tree }
