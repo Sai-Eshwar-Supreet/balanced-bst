@@ -43,4 +43,5 @@ prettyPrint(root);
 // console.log("==================================== Post order traversal")
 // tree.postOrderForEach(data => console.log(data));
 
-console.log("Height of 9: ", tree.height(9));
+console.log("Height of 324: ", tree.height(324));
+console.log("Depth of 324: ", tree.depth(324));

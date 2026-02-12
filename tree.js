@@ -191,6 +191,33 @@ class Tree{
 
         return this.#getHeightRec(node);
     }
+
+    #getDepthRec(node, value){
+        if(!node) return undefined;
+        if(node.data === value) return node;
+
+        return this.#getNode(node.leftNode, value) || this.#getNode(node.rightNode, value);
+    }
+
+    depth(value){
+        let depth = 0;
+        let temp = this.#root;
+        let isFound = false;
+
+
+        while(temp != null){
+            if(temp.data === value){
+                isFound = true;
+                break;
+            }
+            depth++;
+
+            if(value < temp.data) temp = temp.leftNode;
+            else if(value > temp.data) temp = temp.rightNode;
+        }
+
+        return isFound? depth : undefined;
+    }
 }
 
 export { Tree }
