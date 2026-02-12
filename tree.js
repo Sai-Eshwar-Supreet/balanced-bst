@@ -41,6 +41,18 @@ class Tree{
 
         return this.#root;
     }
+
+    #includesRec(node, value){
+        if(!node) return false;
+        if(node.data === value) return true;
+
+        return this.#includesRec(node.leftNode, value) || this.#includesRec(node.rightNode, value);
+        
+    }
+
+    includes(value){
+        return this.#includesRec(this.#root, value);
+    }
 }
 
 export { Tree }
