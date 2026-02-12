@@ -71,6 +71,48 @@ class Tree{
     insert(value){
         this.#root = this.#insertRec(this.#root, value);
     }
+
+    #getSuccessor(node){
+        while(node !== null && node.leftNode !== null){
+            node = node.leftNode;
+        }
+
+        return node;
+    }
+
+    #deleteItemRec(node, value){
+        if(node === null){
+            return node;
+        }
+
+        if(value < node.data){
+            node.leftNode = this.#deleteItemRec(node.leftNode, value);
+        }
+        else if( value > node.data){
+            node.rightNode = this.#deleteItemRec(node.rightNode, value);
+        }
+        else{
+            if(node.leftNode === null){
+                return node.rightNode;
+            }
+            else if(node.rightNode === null){
+                return node.leftNode;
+            }
+            else{
+                const successor = this.#getSuccessor(node.rightNode);
+    
+                node.data = successor.data;
+                node.rightNode = this.#deleteItemRec(node.rightNode, successor.data);
+            }
+        }
+        return node;
+    }
+
+    deleteItem(value){
+        this.#root = this.#deleteItemRec(this.#root, value);
+    }
+
+    
 }
 
 export { Tree }
