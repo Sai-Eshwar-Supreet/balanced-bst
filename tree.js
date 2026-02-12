@@ -42,16 +42,15 @@ class Tree{
         return this.#root;
     }
 
-    #includesRec(node, value){
-        if(!node) return false;
-        if(node.data === value) return true;
+    #getNode(node, value){
+        if(!node) return undefined;
+        if(node.data === value) return node;
 
-        return this.#includesRec(node.leftNode, value) || this.#includesRec(node.rightNode, value);
-        
+        return this.#getNode(node.leftNode, value) || this.#getNode(node.rightNode, value);
     }
 
     includes(value){
-        return this.#includesRec(this.#root, value);
+        return !!this.#getNode(this.#root, value);
     }
 
     #insertRec(node, value){
@@ -176,6 +175,21 @@ class Tree{
 
     postOrderForEach(callback){
         this.#postOrderForEachRec(this.#root, callback);
+    }
+
+    #getHeightRec(node){
+        const leftHeight = !node.leftNode? 0 : 1 + this.#getHeightRec(node.leftNode); 
+        const rightHeight = !node.rightNode? 0 : 1 + this.#getHeightRec(node.rightNode); 
+
+        return Math.max(leftHeight, rightHeight);
+    }
+
+    height(value){
+        const node = this.#getNode(this.#root, value);
+
+        if(!node) return undefined;
+
+        return this.#getHeightRec(node);
     }
 }
 

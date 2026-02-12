@@ -21,6 +21,9 @@ console.log(tree.includes(-2));
 
 tree.insert(10);
 tree.insert(1);
+tree.insert(1000000);
+tree.insert(8000);
+tree.insert(0);
 
 prettyPrint(root);
 tree.deleteItem(8);
@@ -28,14 +31,16 @@ tree.deleteItem(8);
 console.log("====================================")
 prettyPrint(root);
 
-console.log("==================================== Level order traversal")
-tree.levelOrderForEach(data => console.log(data));
+// console.log("==================================== Level order traversal")
+// tree.levelOrderForEach(data => console.log(data));
 
-console.log("==================================== In order traversal")
-tree.inOrderForEach(data => console.log(data));
+// console.log("==================================== In order traversal")
+// tree.inOrderForEach(data => console.log(data));
 
-console.log("==================================== Pre order traversal")
-tree.preOrderForEach(data => console.log(data));
+// console.log("==================================== Pre order traversal")
+// tree.preOrderForEach(data => console.log(data));
 
-console.log("==================================== Post order traversal")
-tree.postOrderForEach(data => console.log(data));
+// console.log("==================================== Post order traversal")
+// tree.postOrderForEach(data => console.log(data));
+
+console.log("Height of 9: ", tree.height(9));
