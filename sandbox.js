@@ -6,11 +6,13 @@ const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 const root = tree.buildTree(arr);
 
+console.log("Is Balance: ", tree.isBalanced());
+
 const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node === null || node === undefined) {
         return;
     }
-
+    
     prettyPrint(node.rightNode, `${prefix}${isLeft ? '│   ' : '    '}`, false);
     console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
     prettyPrint(node.leftNode, `${prefix}${isLeft ? '    ' : '│   '}`, true);
@@ -28,6 +30,7 @@ tree.insert(0);
 prettyPrint(root);
 tree.deleteItem(8);
 
+console.log("Is Balance: ", tree.isBalanced());
 console.log("====================================")
 prettyPrint(root);
 

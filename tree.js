@@ -178,6 +178,7 @@ class Tree{
     }
 
     #getHeightRec(node){
+        if(node === null) return 0;
         const leftHeight = !node.leftNode? 0 : 1 + this.#getHeightRec(node.leftNode); 
         const rightHeight = !node.rightNode? 0 : 1 + this.#getHeightRec(node.rightNode); 
 
@@ -190,13 +191,6 @@ class Tree{
         if(!node) return undefined;
 
         return this.#getHeightRec(node);
-    }
-
-    #getDepthRec(node, value){
-        if(!node) return undefined;
-        if(node.data === value) return node;
-
-        return this.#getNode(node.leftNode, value) || this.#getNode(node.rightNode, value);
     }
 
     depth(value){
@@ -217,6 +211,18 @@ class Tree{
         }
 
         return isFound? depth : undefined;
+    }
+
+    #isBalancedRec(node){
+        if(node === null) return true;
+
+        return this.#isBalancedRec(node.leftNode) 
+            && this.#isBalancedRec(node.rightNode) 
+            && (Math.abs(this.#getHeightRec(node.leftNode) - this.#getHeightRec(node.rightNode)) <= 1)
+    }
+
+    isBalanced(){
+        return this.#isBalancedRec(this.#root);
     }
 }
 
