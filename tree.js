@@ -4,7 +4,7 @@ class Tree{
     #root;
 
     constructor(array){
-        array.sort((a, b) => a - b);
+        array = [...array].sort((a, b) => a - b);
 
         array = this.#removeDuplicates(array);
 
@@ -41,9 +41,10 @@ class Tree{
 
     #getNode(node, value){
         if(!node) return undefined;
-        if(node.data === value) return node;
 
-        return this.#getNode(node.leftNode, value) || this.#getNode(node.rightNode, value);
+        if(node.data === value) return node;
+        if(value < node.data) return this.#getNode(node.leftNode, value);
+        return this.#getNode(node.rightNode, value);
     }
 
     includes(value){
@@ -113,6 +114,8 @@ class Tree{
             throw Error("Callback is required");
         }
 
+        if(!this.#root) return;
+
         let queue = [];
         let currentIndex = 0;
 
@@ -175,9 +178,9 @@ class Tree{
     }
 
     #getHeightRec(node){
-        if(node === null) return 0;
-        const leftHeight = !node.leftNode? 0 : 1 + this.#getHeightRec(node.leftNode); 
-        const rightHeight = !node.rightNode? 0 : 1 + this.#getHeightRec(node.rightNode); 
+        if(node === null) return -1;
+        const leftHeight =  1 + this.#getHeightRec(node.leftNode); 
+        const rightHeight = 1 + this.#getHeightRec(node.rightNode); 
 
         return Math.max(leftHeight, rightHeight);
     }
@@ -193,41 +196,38 @@ class Tree{
     depth(value){
         let depth = 0;
         let temp = this.#root;
-        let isFound = false;
 
 
         while(temp != null){
-            if(temp.data === value){
-                isFound = true;
-                break;
-            }
+            if(temp.data === value) return depth;
             depth++;
 
             if(value < temp.data) temp = temp.leftNode;
             else if(value > temp.data) temp = temp.rightNode;
         }
 
-        return isFound? depth : undefined;
+        return undefined;
     }
 
     #isBalancedRec(node){
-        if(node === null) return true;
+        if(node === null) return {balanced: true, height: -1};
 
-        return this.#isBalancedRec(node.leftNode) 
-            && this.#isBalancedRec(node.rightNode) 
-            && (Math.abs(this.#getHeightRec(node.leftNode) - this.#getHeightRec(node.rightNode)) <= 1)
+        const left = this.#isBalancedRec(node.leftNode);
+        const right = this.#isBalancedRec(node.rightNode);
+
+        const balanced = right.balanced && left.balanced && (Math.abs(left.height - right.height) <= 1)
+        const height = 1 + Math.max(left.height, right.height);
+
+        return {balanced, height};
     }
 
     isBalanced(){
-        return this.#isBalancedRec(this.#root);
+        return this.#isBalancedRec(this.#root).balanced;
     }
-
 
     rebalance(){
         const arr = [];
         this.inOrderForEach(data => arr.push(data));
-        arr.sort((a,b) => a - b);
-
         this.#root = this.#buildTreeRec(arr, 0, arr.length - 1);
     }
 }
