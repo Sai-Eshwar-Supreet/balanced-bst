@@ -112,7 +112,71 @@ class Tree{
         this.#root = this.#deleteItemRec(this.#root, value);
     }
 
-    
+    levelOrderForEach(callback){
+        if(!callback){
+            throw Error("Callback is required");
+        }
+
+        let queue = [];
+        let currentIndex = 0;
+
+        queue.push(this.#root);
+
+        while(currentIndex < queue.length){
+            const node = queue[currentIndex];
+            currentIndex ++;
+
+            callback(node.data);
+
+            if(!!node.leftNode) queue.push(node.leftNode)
+            if(!!node.rightNode) queue.push(node.rightNode)
+        }
+    }
+
+    #inOrderForEachRec(node, callback){
+        if(!callback){
+            throw Error("Callback is required");
+        }
+        if(node === null) return;
+
+        this.#inOrderForEachRec(node.leftNode, callback);
+        callback(node.data);
+        this.#inOrderForEachRec(node.rightNode, callback);
+    }
+
+    inOrderForEach(callback){
+        this.#inOrderForEachRec(this.#root, callback);
+    }
+
+    #preOrderForEachRec(node, callback){
+        if(!callback){
+            throw Error("Callback is required");
+        }
+        if(node === null) return;
+
+        callback(node.data);
+        this.#preOrderForEachRec(node.leftNode, callback);
+        this.#preOrderForEachRec(node.rightNode, callback);
+    }
+
+    preOrderForEach(callback){
+        this.#preOrderForEachRec(this.#root, callback);
+    }
+
+    #postOrderForEachRec(node, callback){
+        if(!callback){
+            throw Error("Callback is required");
+        }
+        if(node === null) return;
+
+        this.#postOrderForEachRec(node.leftNode, callback);
+        this.#postOrderForEachRec(node.rightNode, callback);
+        callback(node.data);
+    }
+
+    postOrderForEach(callback){
+        this.#postOrderForEachRec(this.#root, callback);
+    }
 }
 
 export { Tree }

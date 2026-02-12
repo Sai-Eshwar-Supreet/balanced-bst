@@ -27,3 +27,15 @@ tree.deleteItem(8);
 
 console.log("====================================")
 prettyPrint(root);
+
+console.log("==================================== Level order traversal")
+tree.levelOrderForEach(data => console.log(data));
+
+console.log("==================================== In order traversal")
+tree.inOrderForEach(data => console.log(data));
+
+console.log("==================================== Pre order traversal")
+tree.preOrderForEach(data => console.log(data));
+
+console.log("==================================== Post order traversal")
+tree.postOrderForEach(data => console.log(data));
